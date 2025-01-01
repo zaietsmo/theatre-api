@@ -16,8 +16,45 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from drf_spectacular.views import (
+    SpectacularAPIView,
+    SpectacularRedocView,
+    SpectacularSwaggerView,
+)
+from rest_framework import routers
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
+from accounts.views import RegisterView
+from theatre import views as theatre_views
+
+router = routers.DefaultRouter()
+router.register(r"plays", theatre_views.PlayViewSet)
+router.register(r"actors", theatre_views.ActorViewSet)
+router.register(r"genres", theatre_views.GenreViewSet)
+router.register(r"theatre-halls", theatre_views.TheatreHallViewSet)
+router.register(r"performances", theatre_views.PerformanceViewSet)
+router.register(
+    r"reservations", theatre_views.ReservationViewSet, basename="reservation"
+)
+router.register(r"tickets", theatre_views.TicketViewSet)
+router.register(r"users", theatre_views.UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include(router.urls)),
+    path("api/register/", RegisterView.as_view(), name="register"),
+    path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("api/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/schema/swagger-ui/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/schema/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
 ]
