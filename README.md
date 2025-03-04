@@ -55,7 +55,7 @@ A Django REST API service for a theatre booking system that allows visitors to m
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/theatre-api.git
+   git clone https://github.com/zaietsmo/theatre-api.git
    cd theatre-api
    ```
 
@@ -75,7 +75,7 @@ A Django REST API service for a theatre booking system that allows visitors to m
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/theatre-api.git
+   git clone https://github.com/zaietsmo/theatre-api.git
    cd theatre-api
    ```
 
